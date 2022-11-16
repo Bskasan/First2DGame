@@ -3,7 +3,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //SerializedField attribute to see our variable on Inspector,Unity.
-    [SerializeField] float _speed = 1;
+    [SerializeField] private float _speed = 1;
+    [SerializeField] private float jumpForce = 200;
 
     // Update is called once per frame
     void Update()
@@ -23,7 +24,17 @@ public class Player : MonoBehaviour
         animator.SetBool("isWalking", isWalkingActivated);
 
         //Changing Conditional Statement for Sprite Direction
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.flipX = horizontal < 0;    
+        if (horizontal != 0) 
+        {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.flipX = horizontal < 0;
+        }
+
+        //Jumping 
+        if (Input.GetButtonDown("Jump")) 
+        {
+            rigidbody2D.AddForce(Vector2.up * jumpForce);
+        }
+           
     }
 }
