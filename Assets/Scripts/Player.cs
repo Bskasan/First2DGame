@@ -4,7 +4,7 @@ public class Player : MonoBehaviour
 {
     //SerializedField attribute to see our variable on Inspector,Unity.
     [SerializeField] private float _speed = 1;
-    [SerializeField] private float jumpForce = 200;
+    [SerializeField] private float _jumpForce = 200;
 
     // Update is called once per frame
     void Update()
@@ -31,10 +31,11 @@ public class Player : MonoBehaviour
         }
 
         //Jumping 
-        if (Input.GetButtonDown("Jump")) 
+        if (Input.GetButtonDown("Jump"))
         {
-            rigidbody2D.AddForce(Vector2.up * jumpForce);
+            rigidbody2D.AddForce(Vector2.up * _jumpForce);
+
         }
-           
+
     }
 }
