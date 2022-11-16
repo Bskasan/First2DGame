@@ -15,8 +15,11 @@ public class Player : MonoBehaviour
         // Assigning to rigidbody component of our player, to reference, access and modify.
         var rigidbody2D = GetComponent<Rigidbody2D>();
 
-        rigidbody2D.velocity = new Vector2(horizontal, rigidbody2D.velocity.y);
-        // Velocity : the speed at which someting happens or moves. Hiz.
+        if (Mathf.Abs(horizontal) >= 1) // Abs gives us absolute value.
+        {
+            rigidbody2D.velocity = new Vector2(horizontal, rigidbody2D.velocity.y);
+            // Velocity : the speed at which someting happens or moves. Hiz.
+        }
 
         //Walking Animation
         var animator = GetComponent<Animator>();
