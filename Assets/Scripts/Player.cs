@@ -22,5 +22,8 @@ public class Player : MonoBehaviour
         bool isWalkingActivated = horizontal != 0;
         animator.SetBool("isWalking", isWalkingActivated);
 
+        //Changing Conditional Statement for Sprite Direction
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.flipX = horizontal < 0;    
     }
 }
