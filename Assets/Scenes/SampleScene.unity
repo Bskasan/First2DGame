@@ -399,9 +399,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 7.5
-  _jumpForce: 300
+  _jumpVelocity: 10
   _maxJumps: 2
   _feet: {fileID: 1628057928}
+  _downPull: 0.3
 --- !u!95 &148333076
 Animator:
   serializedVersion: 3
@@ -856,7 +857,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
