@@ -5,11 +5,16 @@ public class Player : MonoBehaviour
     //SerializedField attribute to see our variable on Inspector,Unity.
     [SerializeField] private float _speed = 1;
     [SerializeField] private float _jumpForce = 200;
+    [SerializeField] private int _maxJumps;
+
     private Vector3 _startingPosition;
+    private int _jumpsRemaining;
+    
 
     void Start()
     {
         _startingPosition = transform.position;
+        _jumpsRemaining = _maxJumps;
         
     }
 
@@ -40,12 +45,18 @@ public class Player : MonoBehaviour
         }
 
         //Jumping 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && _jumpsRemaining > 0)
         {
             rigidbody2D.AddForce(Vector2.up * _jumpForce);
+            _jumpsRemaining--;
 
         }
 
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        _jumpsRemaining = _maxJumps;
     }
 
     internal void ResetToStart()
