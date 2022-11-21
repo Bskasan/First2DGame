@@ -5,8 +5,14 @@ public class Player : MonoBehaviour
     //SerializedField attribute to see our variable on Inspector,Unity.
     [SerializeField] private float _speed = 1;
     [SerializeField] private float _jumpForce = 200;
+    private Vector3 _startingPosition;
 
-    // Update is called once per frame
+    void Start()
+    {
+        _startingPosition = transform.position;
+        
+    }
+
     void Update()
     {
         // A float value from -1 to 1 to control our player.
@@ -40,5 +46,11 @@ public class Player : MonoBehaviour
 
         }
 
+    }
+
+    internal void ResetToStart()
+    {
+        // Internal means that we can call this method out of our script.
+        transform.position = _startingPosition;
     }
 }

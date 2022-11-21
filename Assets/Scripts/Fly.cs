@@ -29,8 +29,13 @@ public class Fly : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        var player = collider.GetComponent<Collider>();
+        Player player = collision.GetComponent<Player>();
+        if (player != null) 
+        {
+            player.ResetToStart();
+        }
+
     }
 }
