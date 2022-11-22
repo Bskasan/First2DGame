@@ -8,11 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField] private int _maxJumps;
     [SerializeField] Transform _feet;
     [SerializeField] float _downPull = 5;
+    [SerializeField] float _maxJumpDuration = 0.1f;
 
     private Vector3 _startingPosition;
     private int _jumpsRemaining;
     private float _fallTimer;
-
+    private float _jumpTimer;
+    
 
     void Start()
     {
@@ -56,10 +58,13 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, _jumpVelocity);
             _jumpsRemaining--;
             _fallTimer = 0;
+            _jumpTimer = 0;
 
-            // First way of jumping with AddForce Method
-            //rigidbody2D.AddForce(Vector2.up * _jumpForce);
-            //_jumpsRemaining--;
+        } else if(Input.GetButton("Jump") && _jumpTimer <= _maxJumpDuration)
+        {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, _jumpVelocity);
+            _fallTimer = 0;
+            _jumpTimer += Time.deltaTime;
         }
 
         if (isGrounded)
@@ -75,15 +80,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
-    //    if (hit != null) 
-    //    {
-    //        
-    //    }
-    //}
 
     internal void ResetToStart()
     {
