@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _jumpVelocity: 10
+  _jumpVelocity: 8
   _maxJumps: 2
   _feet: {fileID: 1628057928}
   _downPull: 0.1
@@ -853,7 +853,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0.04695954, y: -0.01411722, z: 0.0006637369, w: 0.9987968}
+  m_LocalRotation: {x: 0.046959545, y: -0.014117217, z: 0.00066373666, w: 0.9987968}
   m_LocalPosition: {x: 5.5322666, y: 5.1946406, z: -13.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -953,7 +953,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553332323}
-  m_LocalRotation: {x: 0.04695954, y: -0.01411722, z: 0.0006637369, w: 0.9987968}
+  m_LocalRotation: {x: 0.046959545, y: -0.014117217, z: 0.00066373666, w: 0.9987968}
   m_LocalPosition: {x: 5.5322666, y: 5.1946406, z: -13.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
