@@ -14,10 +14,19 @@ public class Player : MonoBehaviour
     private int _jumpsRemaining;
     private float _fallTimer;
     private float _jumpTimer;
+    private float _horizontal;
+    private bool _isGrounded;
+    private Rigidbody2D _rigidbody2D;
+    private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     
 
     void Start()
     {
+        // Assigning to rigidbody component of our player, to reference, access and modify.
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _startingPosition = transform.position;
         _jumpsRemaining = _maxJumps;
         
@@ -25,51 +34,22 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
-        bool isGrounded = hit != null;
+        UpdateIsGrounded();
+        ReadHorizontalInput();
+        MoveHorizontal();
 
-        // A float value from -1 to 1 to control our player.
-        var horizontal = Input.GetAxis("Horizontal") * _speed;
-
-        // Assigning to rigidbody component of our player, to reference, access and modify.
-        var rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (Mathf.Abs(horizontal) >= 1) // Abs gives us absolute value.
-        {
-            rigidbody2D.velocity = new Vector2(horizontal, rigidbody2D.velocity.y);
-            // Velocity : the speed at which someting happens or moves. Hiz.
-        }
-
-        //Walking Animation
-        var animator = GetComponent<Animator>();
-        bool isWalkingActivated = horizontal != 0;
-        animator.SetBool("isWalking", isWalkingActivated);
-
-        //Changing Conditional Statement for Sprite Direction
-        if (horizontal != 0) 
-        {
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.flipX = horizontal < 0;
-        }
+        UpdateAnimator();
+        UpdateSpriteDirection();
 
         //Jumping 
-        if (Input.GetButtonDown("Jump") && _jumpsRemaining > 0)
-        {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, _jumpVelocity);
-            _jumpsRemaining--;
-            Debug.Log($"Jumps remaining: {_jumpsRemaining}");
-            _fallTimer = 0;
-            _jumpTimer = 0;
+        if (ShouldStartJump())
+            Jump();
+        else if(ShouldContinueJump())
+            ContinueJump();
 
-        } else if(Input.GetButton("Jump") && _jumpTimer <= _maxJumpDuration)
-        {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, _jumpVelocity);
-            _fallTimer = 0;
-        }
-        
         _jumpTimer += Time.deltaTime;
         
-        if (isGrounded && _fallTimer > 0)
+        if (_isGrounded && _fallTimer > 0)
         {
             _fallTimer = 0;
             _jumpsRemaining = _maxJumps;
@@ -78,11 +58,64 @@ public class Player : MonoBehaviour
         {
             _fallTimer += Time.deltaTime;
             var downForce = _downPull * _fallTimer * _fallTimer;
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y - downForce);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce);
         }
 
     }
 
+    private void ContinueJump()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpVelocity);
+        _fallTimer = 0;
+    }
+    private bool ShouldContinueJump()
+    {
+        return Input.GetButton("Jump") && _jumpTimer <= _maxJumpDuration;
+    }
+    private void Jump()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpVelocity);
+        _jumpsRemaining--;
+        Debug.Log($"Jumps remaining: {_jumpsRemaining}");
+        _fallTimer = 0;
+        _jumpTimer = 0;
+    }
+    private bool ShouldStartJump()
+    {
+        return Input.GetButtonDown("Jump") && _jumpsRemaining > 0;
+    }
+    private void MoveHorizontal()
+    {
+        if (Mathf.Abs(_horizontal) >= 1) // Abs gives us absolute value.
+        {
+            _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+            // Velocity : the speed at which someting happens or moves. Hiz.
+        }
+    }
+    private void ReadHorizontalInput()
+    {
+        // A float value from -1 to 1 to control our player.
+        _horizontal = Input.GetAxis("Horizontal") * _speed;
+    }
+    private void UpdateSpriteDirection()
+    {
+        //Changing Conditional Statement for Sprite Direction
+        if (_horizontal != 0)
+        { 
+            _spriteRenderer.flipX = _horizontal < 0;
+        }
+    }
+    private void UpdateAnimator()
+    {
+        //Walking Animation
+        bool isWalkingActivated = _horizontal != 0;
+        _animator.SetBool("isWalking", isWalkingActivated);
+    }
+    private void UpdateIsGrounded()
+    {
+        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
+        _isGrounded = hit != null;
+    }
     internal void ResetToStart()
     {
         // Internal means that we can call this method out of our script.
