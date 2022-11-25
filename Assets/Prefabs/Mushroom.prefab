@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 799623488278167020}
   - component: {fileID: 799623488278167023}
   - component: {fileID: 799623488278167018}
+  - component: {fileID: 8642900627609705723}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -93,7 +94,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 799623488278167022}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: a34f1d542515b5e41a24dc55f1491299, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
@@ -129,3 +130,15 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &8642900627609705723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799623488278167022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f631c073cf2db48873086fc5ae1fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
