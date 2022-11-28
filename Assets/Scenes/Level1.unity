@@ -451,7 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80c8ef43c3d7de4ba11cb367e380635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 2
+  _slipFactor: 2
   _jumpVelocity: 8
   _maxJumps: 2
   _feet: {fileID: 1628057928}
@@ -831,7 +832,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 9.700483
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -854,7 +855,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0.07060854, y: -0.036081035, z: 0.0025556844, w: 0.9968481}
+  m_LocalRotation: {x: 0.046959512, y: -0.0141172325, z: 0.000663737, w: 0.9987968}
   m_LocalPosition: {x: 5.5322666, y: 5.1946406, z: -13.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -954,7 +955,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553332323}
-  m_LocalRotation: {x: 0.07060854, y: -0.036081035, z: 0.0025556844, w: 0.9968481}
+  m_LocalRotation: {x: 0.046959512, y: -0.0141172325, z: 0.000663737, w: 0.9987968}
   m_LocalPosition: {x: 5.5322666, y: 5.1946406, z: -13.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1216,7 +1217,7 @@ GameObject:
   - component: {fileID: 1047325681}
   m_Layer: 0
   m_Name: snowMid
-  m_TagString: Untagged
+  m_TagString: Slippery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

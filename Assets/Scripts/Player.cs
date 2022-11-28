@@ -3,12 +3,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //SerializedField attribute to see our variable on Inspector,Unity.
+    [Header("Movement")]
     [SerializeField] private float _speed = 1;
+    [SerializeField] private float _slipFactor = 1;
+    [Header("Jump")]
     [SerializeField] private float _jumpVelocity = 200;
     [SerializeField] private int _maxJumps;
     [SerializeField] Transform _feet;
     [SerializeField] float _downPull = 5;
     [SerializeField] float _maxJumpDuration = 0.1f;
+    
 
     private Vector3 _startingPosition;
     private int _jumpsRemaining;
@@ -16,6 +20,7 @@ public class Player : MonoBehaviour
     private float _jumpTimer;
     private float _horizontal;
     private bool _isGrounded;
+    private bool _isOnSlipperySurface;
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -36,7 +41,11 @@ public class Player : MonoBehaviour
     {
         UpdateIsGrounded();
         ReadHorizontalInput();
-        MoveHorizontal();
+
+        if (_isOnSlipperySurface)
+            SlipHorizontal();
+        else
+            MoveHorizontal();
 
         UpdateAnimator();
         UpdateSpriteDirection();
@@ -86,11 +95,19 @@ public class Player : MonoBehaviour
     }
     private void MoveHorizontal()
     {
-        if (Mathf.Abs(_horizontal) >= 1) // Abs gives us absolute value.
-        {
-            _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
-            // Velocity : the speed at which someting happens or moves. Hiz.
-        }
+        _rigidbody2D.velocity = new Vector2(_horizontal * _speed, _rigidbody2D.velocity.y);
+        // Velocity : the speed at which someting happens or moves. Hiz. 
+    }
+    private void SlipHorizontal()
+    {
+        var desiredVelocity = new Vector2(_horizontal * _speed, _rigidbody2D.velocity.y);
+        var smoothedVelocity = Vector2.Lerp(
+            _rigidbody2D.velocity, 
+            desiredVelocity, 
+            Time.deltaTime / _slipFactor);
+
+        _rigidbody2D.velocity = smoothedVelocity;
+        // Velocity : the speed at which someting happens or moves. Hiz. 
     }
     private void ReadHorizontalInput()
     {
@@ -115,6 +132,15 @@ public class Player : MonoBehaviour
     {
         var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
         _isGrounded = hit != null;
+
+        if (hit != null)
+            _isOnSlipperySurface = hit.CompareTag("Slippery");
+            //hit.tag == "Slippery" is also work for it.
+        else
+            _isOnSlipperySurface = false;
+
+        //_isOnSlipperySurface = hit?.CompareTag("Slippery") ?? false;
+        // Short version of the code above
     }
     internal void ResetToStart()
     {
