@@ -6,17 +6,47 @@ using UnityEngine.Events;
 
 public class PushButtonSwitch : MonoBehaviour
 {
-    [SerializeField] private Sprite _downSprite;
-    [SerializeField] private UnityEvent _onEnter;
+    [SerializeField] private Sprite _pressedSprite;
+    [SerializeField] private UnityEvent _onPressed;
+    [SerializeField] private UnityEvent _onReleased;
+
+    private Sprite _releasedSprite;
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _releasedSprite = _spriteRenderer.sprite;
+
+        BecomeReleased();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player == null)
             return;
 
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = _downSprite;
-        
-        _onEnter?.Invoke(); // to execute registered event
+        BecomePressed();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Player player = collision.GetComponent<Player>();
+        if (player == null)
+            return;
+
+        BecomeReleased();
+    }
+
+    private void BecomeReleased()
+    {
+        _spriteRenderer.sprite = _releasedSprite;
+        _onReleased?.Invoke();
+    }
+    private void BecomePressed()
+    {
+        _spriteRenderer.sprite = _pressedSprite;
+        _onPressed?.Invoke(); // to execute registered event
     }
 }
