@@ -7,9 +7,11 @@ public class Slime : MonoBehaviour
 {
     [SerializeField] private Transform _leftSensor;
     [SerializeField] private Transform _rightSensor;
+    [SerializeField] private Sprite _deadSprite;
 
     private Rigidbody2D _rigidbody2D;
     private float _direction = -1;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +71,7 @@ public class Slime : MonoBehaviour
 
         if (normal.y <= -0.5f)
         {
-            Die();
+            StartCoroutine(Die());
         }
         else 
         {
@@ -79,8 +81,24 @@ public class Slime : MonoBehaviour
             
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        GameObject.Destroy(gameObject);
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        spriteRenderer.sprite = _deadSprite;
+        GetComponent<Animator>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        this.enabled = false; // This means that script attached to slime.
+        GetComponent<Rigidbody2D>().simulated = false;
+
+        float alpha = 1;
+
+        while (alpha > 0)
+        {
+            yield return null; // Wait until the currend frame ends, no matter when it happens
+            alpha -= Time.deltaTime;
+            spriteRenderer.color = new Color(1, 1, 1, alpha);
+        }
+        
     }
 }
