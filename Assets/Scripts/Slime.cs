@@ -63,6 +63,24 @@ public class Slime : MonoBehaviour
         if (player == null)
             return;
 
-        player.ResetToStart();
+        var contact = collision.contacts[0];
+        Vector2 normal = contact.normal; // To get contact point 2d
+        Debug.Log($"Normal = {normal}");
+
+        if (normal.y <= -0.5f)
+        {
+            Die();
+        }
+        else 
+        {
+            player.ResetToStart();
+        }
+
+            
+    }
+
+    private void Die()
+    {
+        GameObject.Destroy(gameObject);
     }
 }
