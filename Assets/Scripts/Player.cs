@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //SerializedField attribute to see our variable on Inspector,Unity.
+    [SerializeField] private int _playerNumber = 1;
     [Header("Movement")]
     [SerializeField] private float _speed = 1;
     [SerializeField] private float _slipFactor = 1;
@@ -79,7 +80,7 @@ public class Player : MonoBehaviour
     }
     private bool ShouldContinueJump()
     {
-        return Input.GetButton("Jump") && _jumpTimer <= _maxJumpDuration;
+        return Input.GetButton($"P{_playerNumber}Jump") && _jumpTimer <= _maxJumpDuration;
     }
     private void Jump()
     {
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
     }
     private bool ShouldStartJump()
     {
-        return Input.GetButtonDown("Jump") && _jumpsRemaining > 0;
+        return Input.GetButtonDown($"P{_playerNumber}Jump") && _jumpsRemaining > 0;
     }
     private void MoveHorizontal()
     {
@@ -112,7 +113,7 @@ public class Player : MonoBehaviour
     private void ReadHorizontalInput()
     {
         // A float value from -1 to 1 to control our player.
-        _horizontal = Input.GetAxis("Horizontal") * _speed;
+        _horizontal = Input.GetAxis($"P{_playerNumber}Horizontal") * _speed;
     }
     private void UpdateSpriteDirection()
     {
