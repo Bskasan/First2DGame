@@ -9,9 +9,11 @@ public class PushButtonSwitch : MonoBehaviour
     [SerializeField] private Sprite _pressedSprite;
     [SerializeField] private UnityEvent _onPressed;
     [SerializeField] private UnityEvent _onReleased;
+    [SerializeField] private int _playerNumber = 1;
 
     private Sprite _releasedSprite;
     private SpriteRenderer _spriteRenderer;
+    
 
     private void Awake()
     {
@@ -24,7 +26,7 @@ public class PushButtonSwitch : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
-        if (player == null)
+        if (player == null || player.PlayerNumber != _playerNumber)
             return;
 
         BecomePressed();
@@ -33,7 +35,7 @@ public class PushButtonSwitch : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
-        if (player == null)
+        if (player == null || player.PlayerNumber != _playerNumber)
             return;
 
         BecomeReleased();

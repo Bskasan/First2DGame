@@ -25,7 +25,10 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    
+
+    public int PlayerNumber { get { return _playerNumber; } }
+    // Another way of doing it above -> public int PlayerNumber => _playerNumber;
+
 
     void Start()
     {
