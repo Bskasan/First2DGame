@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
         //Walking Animation
         bool isWalkingActivated = _horizontal != 0;
         _animator.SetBool("isWalking", isWalkingActivated);
+        _animator.SetBool("isJumping", ShouldContinueJump());
     }
     private void UpdateIsGrounded()
     {
