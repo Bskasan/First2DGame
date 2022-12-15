@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
+   
+
     public int PlayerNumber { get { return _playerNumber; } }
     // Another way of doing it above -> public int PlayerNumber => _playerNumber;
 
@@ -133,6 +135,7 @@ public class Player : MonoBehaviour
         _animator.SetBool("isWalking", isWalkingActivated);
         _animator.SetBool("isJumping", ShouldContinueJump());
     }
+
     private void UpdateIsGrounded()
     {
         var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
@@ -147,9 +150,16 @@ public class Player : MonoBehaviour
         //_isOnSlipperySurface = hit?.CompareTag("Slippery") ?? false;
         // Short version of the code above
     }
+
     internal void ResetToStart()
     {
         // Internal means that we can call this method out of our script.
         transform.position = _startingPosition;
+    }
+
+    internal void TeleportTo(Vector3 position)
+    {
+        _rigidbody2D.position = position;
+        _rigidbody2D.velocity = Vector2.zero; // we don't want it to move.
     }
 }

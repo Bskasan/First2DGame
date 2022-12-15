@@ -10,6 +10,8 @@ public class Door : MonoBehaviour
 
     [SerializeField] private SpriteRenderer _rendererTop;
     [SerializeField] private SpriteRenderer _rendererMid;
+    [SerializeField] private int _requiredCoins = 3;
+    [SerializeField] private Door _exit;
 
     [ContextMenu("Open Door")] // Great for testing your code/methods.
 
@@ -19,15 +21,18 @@ public class Door : MonoBehaviour
         _rendererTop.sprite = _openTop;
     }
 
-
-    void Start()
-    {
-        
-    }
-
-    
     void Update()
     {
-        
+        if (Coin.CoinsCollected >= _requiredCoins)
+            Open();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var player = collision.GetComponent<Player>();
+        if (player != null && _exit != null) 
+        {
+            player.TeleportTo(_exit.transform.position);
+        }
     }
 }
