@@ -6,13 +6,20 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     public bool PlayerInside;
-    
+
     private HashSet<Player> _playersInTrigger = new HashSet<Player>();
     private Coroutine _coroutine;
     private Vector3 _initialPosition;
     private bool _falling;
+    private float _wiggleTimer;
 
-    [SerializeField] private float _fallSpeed = 3;
+    [Tooltip("Reset the wiggle timer when no players are on the platform")]
+    [SerializeField] private bool _resetOnEmpty;
+    [SerializeField] private float _fallSpeed = 8;
+    [Range(0.1f, 5)] [SerializeField] private float _fallAfterSeconds = 3;
+    [Range(0.005f, 0.1f)] [SerializeField] private float _shakeX = 0.005f;
+    [Range(0.005f, 0.1f)] [SerializeField] private float _shakeY = 0.005f;
+
     
 
     void Start()
@@ -41,18 +48,18 @@ public class FallingPlatform : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         Debug.Log("Wiggling");
 
-        float wiggleTimer = 0;
+        //_wiggleTimer = 0;
 
-        while (wiggleTimer < 1f) 
+        while (_wiggleTimer < _fallAfterSeconds) 
         {
-            float randomX = UnityEngine.Random.Range(-0.01f, 0.01f);
-            float randomY = UnityEngine.Random.Range(-0.01f, 0.01f);
+            float randomX = UnityEngine.Random.Range(-_shakeX, _shakeX);
+            float randomY = UnityEngine.Random.Range(-_shakeY, _shakeY);
             transform.position = _initialPosition + new Vector3(randomX, randomY);
             // We should use the Vector3 to not get error.
             float randomDelay = UnityEngine.Random.Range(0.005f, 0.01f);
             //yield return null; -->  That means it will wait for us to leave the platform.
             yield return new WaitForSeconds(randomDelay);
-            wiggleTimer += randomDelay;
+            _wiggleTimer += randomDelay;
         }
         
         Debug.Log("Falling");
@@ -96,6 +103,10 @@ public class FallingPlatform : MonoBehaviour
             PlayerInside = false;
             Debug.Log("Stopping Coroutine!");
             StopCoroutine(_coroutine);
+
+            if (_resetOnEmpty)
+                _wiggleTimer = 0;
+         
         }
            
     }
