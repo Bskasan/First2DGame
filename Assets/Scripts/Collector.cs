@@ -18,9 +18,16 @@ public class Collector : MonoBehaviour
     
     void Update()
     {
+
+        // it is better to use this foreach for performance.
+        foreach (var collectible in _collectibles) 
+        {
+            if (collectible.isActiveAndEnabled)
+                return;
+        }
         //for every item in this collection, look at them. check them they're true.
-        if (_collectibles.Any(t => t.gameObject.activeSelf == true))
-            return;
+        //if (_collectibles.Any(t => t.gameObject.activeSelf == true))
+        //    return;
                             
         Debug.Log("Got All Gems");
     }

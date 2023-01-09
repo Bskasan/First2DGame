@@ -25,8 +25,9 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-
-   
+    private string _jumpButton;
+    private string _horizontalAxis;
+    private int _layerMask;
 
     public int PlayerNumber { get { return _playerNumber; } }
     // Another way of doing it above -> public int PlayerNumber => _playerNumber;
@@ -40,7 +41,13 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _startingPosition = transform.position;
         _jumpsRemaining = _maxJumps;
-        
+        //Variables that should have been declare
+        //in the start method for a better performance.
+        _jumpButton = $"P{_playerNumber}Jump";
+        _horizontalAxis = $"P{_playerNumber}Horizontal";
+        _layerMask = LayerMask.GetMask("Default");
+
+
     }
 
     void Update()
@@ -85,7 +92,7 @@ public class Player : MonoBehaviour
     }
     private bool ShouldContinueJump()
     {
-        return Input.GetButton($"P{_playerNumber}Jump") && _jumpTimer <= _maxJumpDuration;
+        return Input.GetButton(_jumpButton) && _jumpTimer <= _maxJumpDuration;
     }
     private void Jump()
     {
@@ -97,7 +104,7 @@ public class Player : MonoBehaviour
     }
     private bool ShouldStartJump()
     {
-        return Input.GetButtonDown($"P{_playerNumber}Jump") && _jumpsRemaining > 0;
+        return Input.GetButtonDown(_jumpButton) && _jumpsRemaining > 0;
     }
     private void MoveHorizontal()
     {
@@ -118,7 +125,7 @@ public class Player : MonoBehaviour
     private void ReadHorizontalInput()
     {
         // A float value from -1 to 1 to control our player.
-        _horizontal = Input.GetAxis($"P{_playerNumber}Horizontal") * _speed;
+        _horizontal = Input.GetAxis(_horizontalAxis) * _speed;
     }
     private void UpdateSpriteDirection()
     {
@@ -138,7 +145,7 @@ public class Player : MonoBehaviour
 
     private void UpdateIsGrounded()
     {
-        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default"));
+        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, _layerMask);
         _isGrounded = hit != null;
 
         if (hit != null)
