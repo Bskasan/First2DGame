@@ -8,7 +8,7 @@ public class Collector : MonoBehaviour
 {
 
     //Array of Collectibles
-    [SerializeField] private Collectible[] _collectibles;
+    [SerializeField] private List<Collectible> _collectibles;
     private TMP_Text _remainingText;
 
     void Start()
@@ -31,7 +31,7 @@ public class Collector : MonoBehaviour
         //    return;
 
         //Recommended way
-        _remainingText.SetText(countRemaining.ToString());
+        _remainingText?.SetText(countRemaining.ToString());
         // Other way;
         //_remainingText.text = countRemaining.ToString();
 
@@ -39,5 +39,11 @@ public class Collector : MonoBehaviour
             return;
                             
         Debug.Log("Got All Gems");
+    }
+
+    private void OnValidate()
+    {
+        //Linq -- Distinct() will find only unique references.
+        _collectibles = _collectibles.Distinct().ToList();
     }
 }
