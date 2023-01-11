@@ -13487,6 +13487,25 @@ MonoBehaviour:
   - {fileID: 518682091}
   - {fileID: 414227944}
   - {fileID: 2022229622}
+  _onCollectionComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 738614730}
+        m_TargetAssemblyTypeName: Collector, Assembly-CSharp
+        m_MethodName: OpenGemDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _openMid: {fileID: 21300000, guid: 1339148d17afedb49a2cd841ff49f337, type: 3}
+  _openTop: {fileID: 21300000, guid: 3ca772cd8aab0d044a70628cb0062834, type: 3}
+  _rendererTop: {fileID: 412468349}
+  _rendererMid: {fileID: 738614731}
 --- !u!212 &738614731
 SpriteRenderer:
   m_ObjectHideFlags: 0

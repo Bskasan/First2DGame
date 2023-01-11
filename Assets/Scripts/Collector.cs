@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
 
-    //Array of Collectibles
+    //List of Collectibles
     [SerializeField] private List<Collectible> _collectibles;
+    [SerializeField] private UnityEvent _onCollectionComplete;
+    [Header("Door Sprites")]
+    [SerializeField] private Sprite _openMid;
+    [SerializeField] private Sprite _openTop;
+
+    [SerializeField] private SpriteRenderer _rendererTop;
+    [SerializeField] private SpriteRenderer _rendererMid;
+
+
     private TMP_Text _remainingText;
+    private Canvas _canvasGem;
 
     void Start()
     {
         _remainingText = GetComponentInChildren<TMP_Text>();
+        _canvasGem = GetComponentInChildren<Canvas>();
     }
 
     
@@ -39,11 +51,20 @@ public class Collector : MonoBehaviour
             return;
                             
         Debug.Log("Got All Gems");
+        _onCollectionComplete.Invoke();
     }
 
     private void OnValidate()
     {
         //Linq -- Distinct() will find only unique references.
         _collectibles = _collectibles.Distinct().ToList();
+    }
+
+    public void OpenGemDoor() 
+    {
+        _canvasGem.enabled = false;
+
+        _rendererMid.sprite = _openMid;
+        _rendererTop.sprite = _openTop;
     }
 }

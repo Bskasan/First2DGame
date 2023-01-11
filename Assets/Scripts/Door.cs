@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
 
     [ContextMenu("Open Door")] // Great for testing your code/methods.
 
-    private void Open() 
+    public void Open() 
     {
         if (_canvas != null)
             _canvas.enabled = false;
