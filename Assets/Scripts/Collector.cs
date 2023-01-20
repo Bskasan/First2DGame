@@ -22,7 +22,7 @@ public class Collector : MonoBehaviour
         _remainingText = GetComponentInChildren<TMP_Text>();
         foreach (var collectible in _collectibles) 
         {
-            collectible.SetCollector(this);
+            collectible.AddCollector(this);
         }
 
         int countRemaining = _collectibles.Count - _countCollected;
