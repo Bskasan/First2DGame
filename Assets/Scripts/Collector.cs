@@ -12,11 +12,13 @@ public class Collector : MonoBehaviour
     //List of Collectibles
     [SerializeField] private List<Collectible> _collectibles;
     [SerializeField] private UnityEvent _onCollectionComplete;
-
+    
+    private static Color _gizmoColor = new Color(0.61f, 0.61f, 0.61f, 1);
 
     private TMP_Text _remainingText;
-    private int _countCollected;
 
+    private int _countCollected;
+    
     void Start()
     {
         _remainingText = GetComponentInChildren<TMP_Text>();
@@ -54,5 +56,22 @@ public class Collector : MonoBehaviour
         _collectibles = _collectibles.Distinct().ToList();
     }
 
-   
+    // To see selected gizmoslines in yellow color
+    private void OnDrawGizmos()
+    {
+        
+        foreach (var collectible in _collectibles) 
+        {    
+            //Short way to use different colors
+            if(UnityEditor.Selection.activeGameObject == gameObject)
+                Gizmos.color = Color.yellow;
+            else
+                Gizmos.color = _gizmoColor;
+
+            Gizmos.DrawLine(transform.position, collectible.transform.position);
+        }
+    }
+
+
+
 }
