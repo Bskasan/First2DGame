@@ -22,14 +22,14 @@ public class Collector : MonoBehaviour
         _remainingText = GetComponentInChildren<TMP_Text>();
         foreach (var collectible in _collectibles) 
         {
-            collectible.AddCollector(this);
+            collectible.OnPickedUp += ItemPickedUp;
         }
 
         int countRemaining = _collectibles.Count - _countCollected;
         _remainingText?.SetText(countRemaining.ToString());
     }
 
-    
+
     public void ItemPickedUp()
     {
         _countCollected++;
