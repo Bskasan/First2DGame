@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemBox : MonoBehaviour
+public class ItemBox : HittableFromBelow
 {
-    [SerializeField] private Sprite _usedSprite;
     [SerializeField] private GameObject _item;
     [SerializeField] private Vector2 _itemLaunchVelocity;
 

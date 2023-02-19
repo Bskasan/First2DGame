@@ -13079,8 +13079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab84c6e4c23d90b4e960d4f05c0f5305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totalCoins: 3
   _usedSprite: {fileID: 21300000, guid: a483416c567dc6f4f8fd49cc2fc009a6, type: 3}
+  _totalCoins: 3
 --- !u!1 &537403009
 GameObject:
   m_ObjectHideFlags: 0
